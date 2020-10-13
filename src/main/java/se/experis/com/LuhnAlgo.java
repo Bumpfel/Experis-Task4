@@ -2,11 +2,11 @@ package se.experis.com;
 
 public final class LuhnAlgo {
 
-  public boolean isValidCreditCard(long cardNr, int checkSum) {
+  public boolean isValidCreditCard(long cardNr, int checkSum) throws RuntimeException {
     String cardNrStr = "" + cardNr;
 
     if(cardNrStr.length() != 15) {
-      return false;
+      throw new RuntimeException("Erroneous input. Credit card number is not long enough");
     }
 
     int sum = 0;
