@@ -21,9 +21,7 @@ public final class LuhnAlgo {
       sum += calc;
     }
     
-    int calculatedChecksum = sum * 9 % 10;
-    System.out.println(calculatedChecksum);
-    
+    int calculatedChecksum = sum * 9 % 10;    
     return calculatedChecksum;
   }
   
