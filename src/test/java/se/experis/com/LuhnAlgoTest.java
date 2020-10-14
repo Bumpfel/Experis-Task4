@@ -20,57 +20,57 @@ class LuhnAlgoTest {
 
   @Test
   void testWrongChecksumWrongLength() {
-    wrongChecksumWrongLength(657);
+    wrongChecksumWrongLength(65, 7);
   }
   @Test
   void testWrongChecksumWrongLength2() {
-    wrongChecksumWrongLength(890);
+    wrongChecksumWrongLength(89, 0);
   }
-  private void wrongChecksumWrongLength(long input) {
-    assertFalse(luhnAlgo.isValidCheckSum(input));
-    assertFalse(luhnAlgo.isValidCreditCard(input));  
+  private void wrongChecksumWrongLength(long input, int chkSum) {
+    assertFalse(luhnAlgo.isValidCheckSum(input, chkSum));
+    assertFalse(luhnAlgo.isValidCreditCard(input, chkSum));  
   }
 
 
   @Test
-  void testCorrectChecksumWrongLength() {
-    correctChecksumWrongLength(679);
+  void testCorrectChecksumWrongLength() {   
+    correctChecksumWrongLength(67, 9);
   }
   @Test
-  void testCorrectChecksumWrongLength2() {
-    correctChecksumWrongLength(398);
+  void testCorrectChecksumWrongLength2() {    
+    correctChecksumWrongLength(39, 8);
   }
-  private void correctChecksumWrongLength(long input) {
-    assertTrue(luhnAlgo.isValidCheckSum(input));
-    assertFalse(luhnAlgo.isValidCreditCard(input));
+  private void correctChecksumWrongLength(long input, int chkSum) {
+    assertTrue(luhnAlgo.isValidCheckSum(input, chkSum));
+    assertFalse(luhnAlgo.isValidCreditCard(input, chkSum));
   }
     
 
   @Test
   void testWrongChecksumCorrectLength() {
-    wrongChecksumCorrectLength(4242424242424241L);
+    wrongChecksumCorrectLength(424242424242424L, 1);
   }
   @Test
   void testWrongChecksumCorrectLength2() {
-    wrongChecksumCorrectLength(1111222233334443L);
+    wrongChecksumCorrectLength(111122223333444L, 3);
   }
-  private void wrongChecksumCorrectLength(long input) {
-    assertFalse(luhnAlgo.isValidCheckSum(input));
-    assertTrue(luhnAlgo.isValidCreditCardLength(input));
+  private void wrongChecksumCorrectLength(long input, int chkSum) {
+    assertFalse(luhnAlgo.isValidCheckSum(input, chkSum));
+    assertTrue(luhnAlgo.isValidCreditCardLength(input, chkSum));
   }
 
   
   @Test
   void testCorrectInput() {
-    correctInput(4242424242424242L);
+    correctInput(424242424242424L, 2);
   }
   @Test
   void testCorrectInput2() {
-    correctInput(1111222233334444L);
+    correctInput(111122223333444L, 4);
   }
-  private void correctInput(long input) {
-    assertTrue(luhnAlgo.isValidCheckSum(input));
-    assertTrue(luhnAlgo.isValidCreditCard(input));
+  private void correctInput(long input, int chkSum) {
+    assertTrue(luhnAlgo.isValidCheckSum(input, chkSum));
+    assertTrue(luhnAlgo.isValidCreditCard(input, chkSum));
   }
 
 }
