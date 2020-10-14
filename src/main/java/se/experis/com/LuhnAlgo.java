@@ -4,25 +4,17 @@ public final class LuhnAlgo {
 
   private final int CREDIT_CARD_LENGTH = 16;
 
-  public int calcCheckSum(long cardNr) {
-    String cardNrString = "" + cardNr;
-    int len = cardNrString.length();
-
+  public static int calcCheckSum(long cardNr) {
+    long number = cardNr / 10;
     int sum = 0;
-    for(int i = cardNrString.length() - 2; i >= 0; i --) {
-      int digit = Integer.parseInt(cardNrString.substring(i, i + 1));
 
-      boolean doubleValue = (len - i) % 2 == 0;
-      int calc = digit * (doubleValue ? 2 : 1);
-      
-      if(calc > 9) {
-        calc -= 9;
-      }
-      sum += calc;
+    for (int i = 0; number > 0; i++) {
+      int digit = (int) (number % 10);
+      sum += digit * ((i & 1) == 0 ? 2 : 1);
+      number /= 10;
     }
-    
-    int calculatedChecksum = sum * 9 % 10;    
-    return calculatedChecksum;
+
+    return sum * 9 % 10;
   }
   
   public boolean isValidCheckSum(long cardNr) {
