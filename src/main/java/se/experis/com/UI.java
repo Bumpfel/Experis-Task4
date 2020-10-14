@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class UI {
     private LuhnAlgo luhnAlgo = new LuhnAlgo();
+    private Scanner scanner;
 
     public static void main(String[] args) {
         UI ui = new UI();
@@ -15,31 +16,31 @@ public class UI {
         System.out.println("-----------------------------");
         System.out.println("--  Luhn Checksum Program  --");
         System.out.println("-----------------------------");
-        System.out.print("Enter the card number you need to validate: ");
-        Scanner scanner = new Scanner(System.in);
-        long nr;
-
-        while (scanner.hasNext()) {
-            identificationNumber = scanner.next();
+        final String USAGE = "Usage: <card number minus checksum digit> <checksum digit>";
+        System.out.println(USAGE);
+        
+        scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Input: ");
+            identificationNumber = scanner.nextLine();
             try {
-                nr = Long.parseLong(identificationNumber);
-                boolean isValid =luhnAlgo.isValidCreditCard(nr);
-                if(nr > 0){
-                    if(isValid){
-                        System.out.println(nr + " is a valid credit card number!");
-                    }
-                    else {
-                        System.out.println(nr + " is not a valid credit card number!");
-                    }
-                }
-                else {
-                    System.out.println(nr + " is not positive number. Please enter a positive number!");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println(identificationNumber + " is not a valid number. Please enter a positive number!");
+                String[] numbers = identificationNumber.split(" ");
+
+                long nr = Long.parseLong(numbers[0]);
+                int checkSumDigit = Integer.parseInt(numbers[1]);
+                int digits = (nr + "" + checkSumDigit).length();
+                System.out.println("Provided: " + checkSumDigit);
+                System.out.println("Expected: " + luhnAlgo.calcCheckSum(nr));
+                System.out.println();
+
+                boolean isValidCheckSum = luhnAlgo.isValidCheckSum(nr, checkSumDigit);
+                System.out.println("Checksum: " + (isValidCheckSum ? " Valid" : "Invalid"));
+                boolean isValidCreditCardLength = luhnAlgo.isValidCreditCardLength(nr, checkSumDigit);
+                System.out.println("Digits: " + digits + " (" + (isValidCreditCardLength ? "credit card" : "not a credit card") + ")");
+            } catch (Exception e) {
+                System.out.println(identificationNumber + " is not a valid input. " + USAGE);
             }
-            System.out.print("Enter a new card number you need to validate: ");
+            System.out.println();
         }
-        scanner.close();
     }
 }
