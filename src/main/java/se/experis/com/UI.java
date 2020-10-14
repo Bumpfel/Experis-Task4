@@ -13,25 +13,27 @@ public class UI {
     }
 
     public void runMenu() {
-        while (!exit) {
-            int cardNumber = getMenuChoice();
-            luhnAlgo.isValidCreditCard(cardNumber);
-            System.out.println("Nu har användaren matat in rätt siffra. Vi kommer att låta användaren komma ur denna loop när vi joina våra lösningar!");
-        }
-    }
+        String identificationnumber;
+        System.out.println("Enter the number you need to validate!");
+        Scanner scanner = new Scanner(System.in);
+        long nr;
 
-    public int getMenuChoice() {
-        Scanner keyboard = new Scanner(System.in);
-        int choice = -1;
-        do {
-            System.out.print("Please enter the number you need to validate: ");
+        while (scanner.hasNext()) {
+            identificationnumber = scanner.next();
             try {
-                choice = Integer.parseInt(keyboard.nextLine());
+                nr = Long.parseLong(identificationnumber);
+                if(nr>0){
+                    System.out.println(identificationnumber + " is a valid number!");
+                    luhnAlgo.isValidCreditCard(nr);
+                    scanner.close();
+                    break;
+                }
+                else {
+                    System.out.println("Please enter a positive number!");
+                }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid number. Enter positive numbers please!");
+                System.out.println(identificationnumber + " is not a valid number!");
             }
-
-        } while (choice < 0);
-        return choice;
+        }
     }
 }
